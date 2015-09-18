@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using Bullet;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -45,8 +46,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         //Import bullet prefab
         public GameObject bullet_prefab;
 
+		//gun gameobject
+		public GameObject gun;
+
+		//velocity of bullet
+		public float newVelocity = 10F;
+
         //Create boolean to save the state of the gun
         private bool isFiring;
+
+		private float frequency = 1.0f;
+
+
 
         // Use this for initialization
         private void Start()
@@ -96,7 +107,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 Fire();
             }
+
+			//set "frequency" or bullet color
+			if (Input.GetKeyDown(KeyCode.Alpha1))
+			{
+				frequency = 1.0f;
+			}
+
+			else if (Input.GetKeyDown(KeyCode.Alpha2))
+			{
+				frequency = 2.0f;
+			}
+
+			else if (Input.GetKeyDown(KeyCode.Alpha3))
+			{
+				frequency = 3.0f;
+			}
         }
+
+
 
 
         private void PlayLandingSound()
@@ -290,9 +319,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Fire()
         {
             //isFiring = true;
+			                                   
+			GameObject b = (GameObject) Instantiate(Resources.Load ("Bullet"), m_Camera.transform.position + m_Camera.transform.forward * .5f, m_Camera.transform.rotation);
+		
+			BulletScript bScript = b.GetComponent<BulletScript> ();
+			bScript.freq = frequency;
 
-            Instantiate(bullet_prefab, transform.position, transform.rotation);
+
+			b.GetComponent<Rigidbody> ().AddForce (m_Camera.transform.forward * newVelocity, ForceMode.Impulse);
+
+
 
         }
+
+
     }
 }
