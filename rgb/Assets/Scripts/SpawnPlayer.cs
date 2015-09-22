@@ -18,8 +18,9 @@ public class SpawnPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        spawnPoint = GetComponent<Transform>(); // set spawnPoint to this object's Transform.
-        GameObject rocketClone = (GameObject)Instantiate(player, transform.position, transform.rotation);
+        //spawnPoint = GetComponent<Transform>(); // set spawnPoint to this object's Transform
+
+        GameObject p = (GameObject)Instantiate(player, transform.position, transform.rotation);
     }
 	
 	// Update is called once per frame
