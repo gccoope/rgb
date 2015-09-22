@@ -319,8 +319,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Fire()
         {
             //isFiring = true;
+
+            //set bullet to gun position
+            GameObject gun = GameObject.FindGameObjectWithTag("gun");
+            Transform gunTransform = gun.GetComponent<Transform>();
+            Quaternion gunRotation = gunTransform.rotation;
+            Vector3 bulletPos = new Vector3(gunTransform.position.x, gunTransform.position.y, gunTransform.position.z);
 			                                   
-			GameObject b = (GameObject) Instantiate(Resources.Load ("Bullet"), m_Camera.transform.position + m_Camera.transform.forward * .5f, m_Camera.transform.rotation);
+			GameObject b = (GameObject) Instantiate(bullet_prefab, bulletPos, gunRotation);
 		
 			BulletScript bScript = b.GetComponent<BulletScript> ();
 			bScript.freq = frequency;
