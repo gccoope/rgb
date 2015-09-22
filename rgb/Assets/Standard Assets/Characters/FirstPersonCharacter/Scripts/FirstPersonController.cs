@@ -170,7 +170,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
             }
 
-            if (isWalking())
+            if (isWalking() || m_Jumping)
             {
                 m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             }
@@ -231,7 +231,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 return;
             }
-            if (isWalking())
+            if (isWalking() || m_Jumping)
             {
                 if (m_CharacterController.velocity.magnitude > 0 && m_CharacterController.isGrounded)
                 {

@@ -28,7 +28,9 @@ public class SpawnPlayer : MonoBehaviour {
 	    if(respawn)
         { // postion the player at the spawn point (Does not reset values like health, etc. !!! Do that somewhere else, maybe?)
             Transform pTransform = player.GetComponent<Transform>();
-            pTransform = spawnPoint;
+			Vector3 newPlayerPosit = new Vector3(pTransform.position.x, pTransform.position.y, pTransform.position.z);
+//			newPlayerPosit.y += 30;
+            pTransform.position = newPlayerPosit;
         }
 
 	}
