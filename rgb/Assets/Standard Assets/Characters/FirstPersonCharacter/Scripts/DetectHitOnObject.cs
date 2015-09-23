@@ -65,6 +65,7 @@ public class DetectHitOnObject : MonoBehaviour
 	void OnCollisionEnter(Collision c)
 	{
 		BulletScript bScript = c.gameObject.GetComponent<BulletScript> ();
+        if (bScript == null) return;
 		Debug.Log ("The frequency is " + bScript.freq);
 
 		if (destroyonhit) {
