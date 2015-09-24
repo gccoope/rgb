@@ -50,7 +50,8 @@ public class InteractWithLight : MonoBehaviour {
                     // this is for prisms and stuff
                     break;
                 case Type.Absorb:
-                    GameObject l = (GameObject)Instantiate(lightLinger, bulletPos, bulletRot); // create a lightLinger object
+                    GameObject l = (GameObject)Instantiate(lightLinger, bulletPos, bulletRot);// create a lightLinger object
+					//l.GetComponent<Transform>().SetParent(gameObject, false);
                     Destroy(col.gameObject); // destroy bullet
                     break;
             }
