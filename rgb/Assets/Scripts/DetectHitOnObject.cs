@@ -21,6 +21,12 @@ public class DetectHitOnObject : MonoBehaviour
 	//Enable to toggle scale of object over time
 	public bool changeScale = false;
 	
+	//Enable to toggle moving over time
+	public bool changePosition = false;
+	public Vector3 moveAmount = new Vector3(0f, 0f, 0f);
+	private Vector3 initialPosition;
+	public float movingRate = 1.0f;
+	
 	//Set how fast scaling occurs and what new scale becomes.
 	public float newScale = 2;
 	public float scalingRate = 1.0f;
@@ -38,6 +44,13 @@ public class DetectHitOnObject : MonoBehaviour
 	private bool scaled = false;
 	private int scaleCount = 0;
 	private int scaleMax;
+	
+	//Variables for moving platform
+	private bool moving = false;
+	private bool moved = false;
+	private int moveCount = 0;
+	private int moveMax;
+	
 	private int signx;
 	private int signy;
 	private int signz;
@@ -67,6 +80,8 @@ public class DetectHitOnObject : MonoBehaviour
 			scaleMax = (int)Math.Round((scalingRate / Time.fixedDeltaTime) * (initialScale.x - newScale));
 		}
 		
+		initialPosition = transform.position;
+		moveMax = (int)Math.Round((movingRate / Time.fixedDeltaTime));
 		
 		//Calculate whether to shrink or grow
 		signx = Math.Sign(((newScale * initialScale.x) - initialScale.x));
@@ -127,16 +142,50 @@ public class DetectHitOnObject : MonoBehaviour
 			if (changeScale) {
 				scaling = true;
 			}
+			if(changePosition)
+			{
+				moving = true;
+			}
 		}
 	}
 	
 	void FixedUpdate()
 	{
-		Debug.Log ("Mass of object is " + this.GetComponent<Rigidbody>().mass);
+		//Debug.Log ("Mass of object is " + this.GetComponent<Rigidbody>().mass);
 		
 		if(isGravityFlipped)
 		{
 			this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10, 0));
+		}
+		
+		if(moving)
+		{
+			if(moved)
+			{
+				transform.position = new Vector3(transform.position.x - (movingRate * Time.fixedDeltaTime)*moveAmount.x, transform.position.y - (movingRate * Time.fixedDeltaTime) * moveAmount.y, transform.position.z - (movingRate * Time.fixedDeltaTime) * moveAmount.z);
+				moveCount++;
+				
+				if (moveCount >= moveMax)
+				{
+					transform.position = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z);
+					moving = false;
+					moved = false;
+					moveCount = 0;
+				}
+			}
+			else
+			{
+				transform.position = new Vector3(transform.position.x + (movingRate * Time.fixedDeltaTime) * moveAmount.x, transform.position.y + (movingRate * Time.fixedDeltaTime) * moveAmount.y, transform.position.z + (movingRate * Time.fixedDeltaTime) * moveAmount.z);
+				moveCount++;
+				
+				if (moveCount >= moveMax)
+				{
+					transform.position = new Vector3(initialPosition.x + moveAmount.x, initialPosition.y + moveAmount.y, initialPosition.z + moveAmount.z);
+					moving = false;
+					moved = true;
+					moveCount = 0;
+				}
+			}
 		}
 		
 		if(scaling)
