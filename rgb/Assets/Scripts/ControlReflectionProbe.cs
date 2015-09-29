@@ -25,9 +25,10 @@ public class ControlReflectionProbe : MonoBehaviour {
 	void Update ()
     {
 
-        // I don't understand why this doesn't work.
 
-        if(playerCam == null)playerCam = GameObject.FindGameObjectWithTag("player");
+        // Works now! Needed to set playerCam to the "MainCamera" object rather than "player"
+
+        if(playerCam == null)playerCam = GameObject.FindGameObjectWithTag("MainCamera");
         Vector3 probePos = gameObject.GetComponent<Transform>().position;
 
         if (dir == Direction.X)
@@ -53,7 +54,7 @@ public class ControlReflectionProbe : MonoBehaviour {
             offset = mirror.transform.position.z - playerCam.transform.position.z;
 
             probePos.x = playerCam.transform.position.x;
-            probePos.y = playerCam.transform.position.y;
+			probePos.y = playerCam.transform.position.y;
             probePos.z = mirror.transform.position.z + offset;
         }
 
