@@ -14,6 +14,13 @@ namespace Bullet
 {
 	public class BulletScript : MonoBehaviour {
 
+        [SerializeField] public TypeOfLight lightType; // set the type of light in the inspector
+        
+        private float lifeTime = 5.0f; // bullets are alive for 5 seconds
+        private float launchImpulse = 1.0f; // initial impulse that sends the bullet forward
+
+
+        /*
 		//frequency of bullet
 		public float freq = 1.0f;
 
@@ -30,9 +37,13 @@ namespace Bullet
 
 		//for debug
 		private bool d = true;
+        */
 
 		// Use this for initialization
 		void Start () {
+
+            /*
+
 			timeToDestroy = 2.0f;
 
 			//Destory the bullet after a set amount of time
@@ -60,7 +71,7 @@ namespace Bullet
 				Debug.Log ("Time to destroy: " + timeToDestroy);
 			}
 
-
+               */
 	
 		}
 		
@@ -71,21 +82,20 @@ namespace Bullet
 		}
 
 		void OnDestroy() {
-
-			if (d) {
-				Debug.Log ("Destroyed bullet");
-			}
+            Debug.Log ("Destroyed bullet");
 		}
 
 
 		void FixedUpdate() {
 
+            /*
 			//decrement alpha of bullet
 			if (m.color.a > 0) {
 				c = m.color;
 				c.a -= step;
 				m.color = c;
 			}
+            */
 		}
 
 	}

@@ -6,11 +6,13 @@ using System;
 [RequireComponent ( typeof(Collider))]
 public class DetectHitOnObject : MonoBehaviour 
 {
-	
-	//Public variables
-	
-	//Variable to set the frequency (color) enable trigger
-	public float frequency = 1.0f;
+
+    //Public variables
+
+    //Variable to set the frequency (color) enable trigger
+    //public float frequency = 1.0f;
+    //Changed to enum instead of float:
+    [SerializeField] TypeOfLight lightType;
 	
 	//Enable to destroy on matched frequency
 	public bool destroyonhit = false;
@@ -60,6 +62,7 @@ public class DetectHitOnObject : MonoBehaviour
 	
 	private void Start()
 	{
+        /*
 		//set color based on frequency
 		if (frequency == 1.0f)
 			this.GetComponent<MeshRenderer> ().material = Resources.Load ("Red_Mat", typeof(Material)) as Material;
@@ -67,6 +70,20 @@ public class DetectHitOnObject : MonoBehaviour
 			this.GetComponent<MeshRenderer> ().material = Resources.Load ("Green_Mat", typeof(Material)) as Material;
 		else if (frequency == 3.0f)
 			this.GetComponent<MeshRenderer> ().material = Resources.Load ("Blue_Mat", typeof(Material)) as Material;
+            */
+
+        switch(lightType)
+        {
+            case TypeOfLight.Red:
+                this.GetComponent<MeshRenderer>().material = Resources.Load("Red_Mat", typeof(Material)) as Material;
+                break;
+            case TypeOfLight.Green:
+                this.GetComponent<MeshRenderer>().material = Resources.Load("Green_Mat", typeof(Material)) as Material;
+                break;
+            case TypeOfLight.Blue:
+                this.GetComponent<MeshRenderer>().material = Resources.Load("Blue_Mat", typeof(Material)) as Material;
+                break;
+        }
 		
 		
 		initialScale = this.transform.localScale;
@@ -94,13 +111,13 @@ public class DetectHitOnObject : MonoBehaviour
 	{
 		BulletScript bScript = c.gameObject.GetComponent<BulletScript> ();
 		if (bScript == null) return;
-		Debug.Log ("The frequency is " + bScript.freq);
+		//Debug.Log ("The frequency is " + bScript.freq);
 		
 		
 		
 		
 		
-		if (frequency == bScript.freq) {
+		if (lightType == bScript.lightType) {
 			
 			if (freqaffectphysics) {
 				

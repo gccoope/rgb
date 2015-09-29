@@ -21,7 +21,9 @@ public class InteractWithLight : MonoBehaviour {
     }
 
     [SerializeField] Type interactType;
+    [SerializeField] TypeOfLight lightType;
     [SerializeField] GameObject lightLinger; // Light linger object that is created when light is absorbed
+    // !!!! It would probably be a good idea not to make this a serialized field.
 
     // Use this for initialization
     void Start () {
@@ -39,6 +41,7 @@ public class InteractWithLight : MonoBehaviour {
         if(bScript != null)
         {
             Transform bulletTransform = col.gameObject.GetComponent<Transform>();
+            Light bulletLight = col.gameObject.GetComponent<Light>();
             Vector3 bulletPos = bulletTransform.position;
             Quaternion bulletRot = bulletTransform.rotation;
 
@@ -51,7 +54,8 @@ public class InteractWithLight : MonoBehaviour {
                     break;
                 case Type.Absorb:
                     GameObject l = (GameObject)Instantiate(lightLinger, bulletPos, bulletRot);// create a lightLinger object
-					//l.GetComponent<Transform>().SetParent(gameObject, false);
+                    Color lightColor = bulletLight.color;
+                    l.GetComponent<Light>().color = lightColor;
                     Destroy(col.gameObject); // destroy bullet
                     break;
             }

@@ -8,8 +8,9 @@ using Bullet;
 namespace UnityStandardAssets.Characters.FirstPerson
 {
 	[RequireComponent(typeof (CharacterController))]
-	[RequireComponent(typeof (AudioSource))]
-	public class FirstPersonController : MonoBehaviour
+    [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(PlayerLight))]
+    public class FirstPersonController : MonoBehaviour
 	{
 		[SerializeField] private bool m_IsWalking;
 		[SerializeField] private float m_WalkSpeed;
@@ -42,9 +43,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private float m_NextStep;
 		private bool m_Jumping;
 		private AudioSource m_AudioSource;
+        private PlayerLight playerLight;
 		
 		//Import bullet prefab
-		public GameObject bullet_prefab;
+		//public GameObject bullet_prefab;
 		
 		//gun gameobject
 		public GameObject gun;
@@ -55,7 +57,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		//Create boolean to save the state of the gun
 		private bool isFiring;
 		
-		private float frequency = 1.0f;
 		
 		
 		
@@ -72,6 +73,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_Jumping = false;
 			m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+
+            playerLight = gameObject.GetComponent<PlayerLight>();
 			
 			//Set default state
 			isFiring = false;
@@ -110,19 +113,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			
 			//set "frequency" or bullet color
 			if (Input.GetKeyDown(KeyCode.Alpha1))
-			{
-				frequency = 1.0f;
-			}
+            {
+                playerLight.playerLightType = TypeOfLight.Red;
+            }
 			
 			else if (Input.GetKeyDown(KeyCode.Alpha2))
-			{
-				frequency = 2.0f;
-			}
+            {
+                playerLight.playerLightType = TypeOfLight.Green;
+            }
 			
 			else if (Input.GetKeyDown(KeyCode.Alpha3))
-			{
-				frequency = 3.0f;
-			}
+            {
+                playerLight.playerLightType = TypeOfLight.Blue;
+            }
 		}
 		
 		
@@ -318,24 +321,61 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		//Bullet is spawn and given velocity
 		private void Fire()
 		{
-			//isFiring = true;
-			
-			//set bullet to gun position
+
+            //isFiring = true;
+
+            //set bullet to gun position
+            /*
 			GameObject gun = GameObject.FindGameObjectWithTag("gun");
 			Transform gunTransform = gun.GetComponent<Transform>();
 			Quaternion gunRotation = gunTransform.rotation;
 			Vector3 bulletPos = new Vector3(gunTransform.position.x, gunTransform.position.y, gunTransform.position.z);
-			
-			GameObject b = (GameObject) Instantiate(bullet_prefab, bulletPos, gunRotation);
-			
-			BulletScript bScript = b.GetComponent<BulletScript> ();
-			bScript.freq = frequency;
-			
-			
-			b.GetComponent<Rigidbody> ().AddForce (m_Camera.transform.forward * newVelocity, ForceMode.Impulse);
-			
-			
-			
+            */
+
+            PlayerLight playerLight = gameObject.GetComponent<PlayerLight>();
+            GameObject bulletObj = null;
+
+            switch (playerLight.playerLightType)
+            {
+                case TypeOfLight.White:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_White", typeof(GameObject))) as GameObject;
+                    break;
+                case TypeOfLight.Red:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_Red", typeof(GameObject))) as GameObject;
+                    break;
+                case TypeOfLight.Orange:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_Orange", typeof(GameObject))) as GameObject;
+                    break;
+                case TypeOfLight.Yellow:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_Yellow", typeof(GameObject))) as GameObject;
+                    break;
+                case TypeOfLight.Green:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_Green", typeof(GameObject))) as GameObject;
+                    break;
+                case TypeOfLight.Blue:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_Blue", typeof(GameObject))) as GameObject;
+                    break;
+                case TypeOfLight.Violet:
+                    bulletObj = Instantiate(Resources.Load("LightBullets/LightBullet_Violet", typeof(GameObject))) as GameObject;
+                    break;
+            }
+
+            if(bulletObj == null)
+            {
+                Debug.Log("bullet isn't loading fuck you");
+                return;
+            }
+            else
+            {
+                GameObject gun = GameObject.FindGameObjectWithTag("gun");
+                Transform gunTransform = gun.GetComponent<Transform>();
+                Quaternion gunRotation = gunTransform.rotation;
+                Vector3 bulletStartPos = new Vector3(gunTransform.position.x, gunTransform.position.y, gunTransform.position.z);
+                BulletScript bScript = bulletObj.GetComponent<BulletScript>();
+                bulletObj.GetComponent<Transform>().position = bulletStartPos;
+                bulletObj.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * newVelocity, ForceMode.Impulse);
+            }
+
 		}
 		
 		
