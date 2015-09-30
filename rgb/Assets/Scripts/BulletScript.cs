@@ -82,7 +82,7 @@ namespace Bullet
 		}
 
 		void OnDestroy() {
-            Debug.Log ("Destroyed bullet");
+//            Debug.Log ("Destroyed bullet");
 		}
 
 
