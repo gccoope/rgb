@@ -9,6 +9,7 @@ using System.Collections;
  * game-over.
  */
 
+// all the different types of light we could potentially put in the game
 public enum TypeOfLight
 {
     Infrared,
@@ -28,8 +29,14 @@ public enum TypeOfLight
 
 public class PlayerLight : MonoBehaviour
 {
-    // all the different types of light we could potentially put in the game
-
+    // all colors used throughout the game for CONSISTENCY!
+    public static Color color_red = new Color(1.0f, 0f, 0f);
+    public static Color color_orange = new Color(1.0f, 0.35f, 0f);
+    public static Color color_yellow = new Color(1.0f, 1.0f, 0f);
+    public static Color color_green = new Color(0f, 1.0f, 0f);
+    public static Color color_blue = new Color(0f, 0.35f, 1f);
+    public static Color color_violet = new Color(1.0f, 0f, 1.0f);
+    public static Color color_white = new Color(1.0f, 1.0f, 1.0f);
 
     [SerializeField]
     public TypeOfLight playerLightType;
@@ -54,7 +61,7 @@ public class PlayerLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerLight.intensity = (lightLeft / maxLight) * startLightIntensity;
+        //playerLight.intensity = (lightLeft / maxLight) * startLightIntensity;
     }
 
     // use this function to change how much light the player still has
@@ -63,5 +70,38 @@ public class PlayerLight : MonoBehaviour
         lightLeft += incr;
         if (lightLeft < 0) lightLeft = 0;
         else if (lightLeft > maxLight) lightLeft = maxLight;
+    }
+
+    public void changeLightType(TypeOfLight newLightType)
+    {
+        playerLightType = newLightType;
+        switch (newLightType)
+        {
+            case TypeOfLight.White:
+                playerLight.color = color_white;
+                break;
+            case TypeOfLight.Red:
+                playerLight.color = color_red;
+                break;
+            case TypeOfLight.Orange:
+                playerLight.color = color_orange;
+                break;
+            case TypeOfLight.Yellow:
+                playerLight.color = color_yellow;
+                break;
+            case TypeOfLight.Green:
+                playerLight.color = color_green;
+                break;
+            case TypeOfLight.Blue:
+                playerLight.color = color_blue;
+                break;
+            case TypeOfLight.Violet:
+                playerLight.color = color_violet;
+                break;
+            default:
+                Debug.Log("changeLightType switch defaulted");
+                playerLight.color = color_white;
+                break;
+        }
     }
 }

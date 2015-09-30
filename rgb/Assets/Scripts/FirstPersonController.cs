@@ -112,6 +112,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			}
 			
 			//set "frequency" or bullet color
+            /* // removing this code after prisms implemented
 			if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 playerLight.playerLightType = TypeOfLight.Red;
@@ -126,6 +127,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 playerLight.playerLightType = TypeOfLight.Blue;
             }
+            */
 		}
 		
 		
@@ -362,7 +364,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if(bulletObj == null)
             {
-                Debug.Log("bullet isn't loading fuck you");
+                Debug.Log("bullet is null, is the light type set correctly?");
                 return;
             }
             else
