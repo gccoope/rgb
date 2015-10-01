@@ -68,7 +68,7 @@ public class PlayerLight : MonoBehaviour
     public void incrLightByPrcnt(float percent)
     {
         float incr = percent * maxLight;
-        lightLeft += incr;
+//        lightLeft += incr;
         if (lightLeft < 0) lightLeft = 0;
         else if (lightLeft > maxLight) lightLeft = maxLight;
     }

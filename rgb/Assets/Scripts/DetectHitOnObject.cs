@@ -48,7 +48,7 @@ public class DetectHitOnObject : MonoBehaviour
 	private int scaleMax;
 	
 	//Variables for moving platform
-	private bool moving = false;
+	public bool moving = false;
 	private bool moved = false;
 	private int moveCount = 0;
 	private int moveMax;
