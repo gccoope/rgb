@@ -61,12 +61,13 @@ public class PlayerLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //playerLight.intensity = (lightLeft / maxLight) * startLightIntensity;
+        playerLight.intensity = (lightLeft / maxLight) * startLightIntensity;
     }
 
-    // use this function to change how much light the player still has
-    public void incrementLight(float incr)
+    // use this function to change how much light the player still has by a percentage of maxLight
+    public void incrLightByPrcnt(float percent)
     {
+        float incr = percent * maxLight;
         lightLeft += incr;
         if (lightLeft < 0) lightLeft = 0;
         else if (lightLeft > maxLight) lightLeft = maxLight;

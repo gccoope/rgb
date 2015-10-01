@@ -10,7 +10,8 @@ using System.Collections;
 
 [RequireComponent(typeof(Collider))]
 
-public class InteractWithLight : MonoBehaviour {
+public class InteractWithLight : MonoBehaviour
+{
 
     // Reflect = the light bullet simply bounces off the surface
     // Refract = the light source is "split" into multiple beams/bullets
@@ -20,32 +21,37 @@ public class InteractWithLight : MonoBehaviour {
         Reflect, Refract, Absorb
     }
 
-    [SerializeField] Type interactType;
-    [SerializeField] TypeOfLight lightType;
-    [SerializeField] GameObject lightLinger; // Light linger object that is created when light is absorbed
+    [SerializeField]
+    Type interactType;
+    [SerializeField]
+    TypeOfLight lightType;
+    //[SerializeField] GameObject lightLinger; // Light linger object that is created when light is absorbed
     // !!!! It would probably be a good idea not to make this a serialized field.
 
     // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     void OnCollisionEnter(Collision col)
     {
         BulletScript bScript = col.gameObject.GetComponent<BulletScript>();
-        if(bScript != null)
+        if (bScript != null)
         {
             Transform bulletTransform = col.gameObject.GetComponent<Transform>();
             Light bulletLight = col.gameObject.GetComponent<Light>();
             Vector3 bulletPos = bulletTransform.position;
             Quaternion bulletRot = bulletTransform.rotation;
 
-            switch (interactType) {
+            switch (interactType)
+            {
                 case Type.Reflect:
                     // do nothing? right?
                     break;
@@ -53,7 +59,10 @@ public class InteractWithLight : MonoBehaviour {
                     // this is for prisms and stuff
                     break;
                 case Type.Absorb:
-                    GameObject l = (GameObject)Instantiate(lightLinger, bulletPos, bulletRot);// create a lightLinger object
+                    GameObject l = Instantiate(Resources.Load("LightLinger", typeof(GameObject))) as GameObject;
+                    l.transform.position = col.gameObject.transform.position;
+
+                    //GameObject l = (GameObject)Instantiate(lightLinger, bulletPos, bulletRot);// create a lightLinger object
                     Color lightColor = bulletLight.color;
                     l.GetComponent<Light>().color = lightColor;
                     Destroy(col.gameObject); // destroy bullet
