@@ -10,9 +10,9 @@ public class ShowSensor : MonoBehaviour
     private float int3;
 
     //reference to sensors related to button
-    public GameObject trigger1;
-    public GameObject trigger2;
-    public GameObject trigger3;
+    public GameObject trigger1 = null;
+	public GameObject trigger2 = null;
+	public GameObject trigger3 = null;
 
     public bool debugFlag = false;
 
