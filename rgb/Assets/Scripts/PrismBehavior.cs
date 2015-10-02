@@ -31,17 +31,17 @@ public class PrismBehavior : MonoBehaviour {
         t.position = newPos;
 
         // spin cube
-//        transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime);
+		transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime);
 	}
 
 
     void OnTriggerEnter(Collider col)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("player");
-        if (col.gameObject == player)
+        //GameObject player = GameObject.FindGameObjectWithTag("player");
+        if (col.gameObject.tag == "player")
         {
             // change player's color
-            player.GetComponent<PlayerLight>().changeLightType(prismType);
+            col.gameObject.GetComponent<PlayerLight>().changeLightType(prismType);
         }
     }
 }
