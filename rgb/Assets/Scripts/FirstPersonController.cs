@@ -327,6 +327,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
+
         }
 
         private bool isWalking()
@@ -406,12 +407,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         void onCollisionEnter(Collider col)
         {
-            if (col.gameObject.tag == "light_linger")
-            {
-                playerLight.incrLightByPrcnt(0.1f);
-                Debug.Log("light reabsorbed!");
-                Destroy(col.gameObject);
-            }
+			Debug.Log ("enter!!!");
         }
 
 

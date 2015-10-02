@@ -8,19 +8,20 @@ using System.Collections;
 */
 
 [RequireComponent(typeof(Light))] // require parent object to have a Transform component
+[RequireComponent(typeof(SphereCollider))]
 
 public class LightLingerBehavior : MonoBehaviour
 {
 
-    [SerializeField]
-    float lifeTime; // total life time of the object
+    [SerializeField] float lifeTime; // total life time of the object
+	[SerializeField] float moveSpeed;
 
     private float counter; // counts down to object's destruction
     private Light lightSource;
     private float startInstensity; // the initial intensity of this object's lightsource
     private bool moveToTarget; // if a LightLinger object is near an object that can absorb it, move toward that object
-    private Vector3 targetPos;
-    private float moveSpeed;
+	private GameObject targetObj;
+	private float sphereColRadius; // radius of sphere collider
 
     // Use this for initialization
     void Start()
@@ -29,8 +30,8 @@ public class LightLingerBehavior : MonoBehaviour
         lightSource = GetComponent<Light>();
         startInstensity = lightSource.intensity;
         moveToTarget = false;
-        targetPos = transform.position;
-        moveSpeed = 1.0f; // arbitrary number, use whatever works best
+		targetObj = null;
+		sphereColRadius = gameObject.GetComponent<SphereCollider> ().radius;
     }
 
     // Update is called once per frame
@@ -44,7 +45,15 @@ public class LightLingerBehavior : MonoBehaviour
 
         if (moveToTarget)
         {
-            Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            Vector3 newPos = Vector3.MoveTowards(transform.position, targetObj.transform.position, moveSpeed * Time.deltaTime);
+			transform.position = newPos;
+
+			float distance = Vector3.Distance(transform.position, targetObj.transform.position);
+			if(distance <= 0.05f) {
+				GameObject player = GameObject.FindGameObjectWithTag("player");
+				player.GetComponent<PlayerLight>().incrLightByPrcnt(1.0f);
+				Destroy(gameObject);
+			}
         }
     }
 
@@ -52,8 +61,17 @@ public class LightLingerBehavior : MonoBehaviour
     {
         if (col.gameObject.tag == "player")
         {
-            moveToTarget = true;
-            targetPos = col.gameObject.transform.position;
+			targetObj = col.gameObject;
+			moveToTarget = true;
         }
-    }
+	}
+	
+	void OnTriggerExit(Collider col)
+	{
+		if (col.gameObject.tag == "player")
+		{
+			targetObj = null;
+			moveToTarget = false;
+		}
+	}
 }
