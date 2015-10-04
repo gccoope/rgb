@@ -53,6 +53,7 @@ public class LightLingerBehavior : MonoBehaviour
 				GameObject player = GameObject.FindGameObjectWithTag("player");
 				player.GetComponent<PlayerLight>().incrLightByPrcnt(1.0f);
 				Destroy(gameObject);
+                Debug.Log("player absorbed light!");
 			}
         }
     }

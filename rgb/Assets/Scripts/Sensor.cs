@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using Bullet;
 
 public class Sensor : MonoBehaviour
 {
+
+    [SerializeField] TypeOfLight lightType;
 
     //is sensor active to begin with?
     public bool active = true;
@@ -49,17 +51,12 @@ public class Sensor : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-
-        //    if (canTripAgain) {
-        //        active = !active;
-
-        //    }
-        //    else
-        //        active = false;
-
-        //}
-
-        active = false;
+        if (col.gameObject.tag == "bullet")
+        {
+            GameObject bullet = col.gameObject;
+            // only trip sensor when bullet is struck by the right type of bullet
+            if (bullet.GetComponent<BulletScript>().lightType == lightType) active = false; 
+        }
     }
 
 

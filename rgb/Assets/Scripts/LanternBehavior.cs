@@ -10,6 +10,7 @@ using System.Collections;
 
 
 [RequireComponent(typeof(Light))]
+[RequireComponent(typeof(SwitchBehavior))]
 
 public class LanternBehavior : MonoBehaviour {
 
@@ -36,6 +37,7 @@ public class LanternBehavior : MonoBehaviour {
 			lanternLight.enabled = true;
 			lanternLight.color = bulletLight.color;
 			lanternLight.intensity = bulletLight.intensity;
+            GetComponent<SwitchBehavior>().setOn(true);
 			Destroy(col.gameObject);
 		}
 	}
