@@ -20,9 +20,14 @@ public class ShowSensor : MonoBehaviour
     void Start()
     {
 
-        int1 = trigger1.GetComponent<Light>().intensity;
-        int2 = trigger2.GetComponent<Light>().intensity;
-        int3 = trigger3.GetComponent<Light>().intensity;
+		if(trigger1 != null)
+			int1 = trigger1.GetComponent<Light>().intensity;
+		
+		if(trigger2 != null)
+			int2 = trigger2.GetComponent<Light>().intensity;
+		
+		if(trigger3 != null)
+			int3 = trigger3.GetComponent<Light>().intensity;
 
     }
 
