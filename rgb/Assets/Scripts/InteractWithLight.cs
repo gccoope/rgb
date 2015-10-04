@@ -60,11 +60,19 @@ public class InteractWithLight : MonoBehaviour
                     break;
                 case Type.Absorb:
                     GameObject l = Instantiate(Resources.Load("LightLinger", typeof(GameObject))) as GameObject;
+                    GameObject paint = Instantiate(Resources.Load("PaintArea", typeof(GameObject))) as GameObject;
                     l.transform.position = col.gameObject.transform.position;
+
                     
                     Color lightColor = bulletLight.color;
                     l.GetComponent<Light>().color = lightColor;
                     l.GetComponent<Light>().range = bulletLight.range;
+
+                    paint.transform.position = col.gameObject.transform.position;
+
+
+
+                    
                     Destroy(col.gameObject); // destroy bullet
                     break;
             }
