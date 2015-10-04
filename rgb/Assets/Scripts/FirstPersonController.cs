@@ -63,6 +63,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
         private PlayerLight playerLight;
 
+		private float startingMaxLightValue;
+		private float lightRatio;
+
         //Import bullet prefab
         //public GameObject bullet_prefab;
 
@@ -74,6 +77,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         //Create boolean to save the state of the gun
         private bool isFiring;
+
+		//flip me to get debug messages!
+		public bool debugFlag = false;
 
 
 
@@ -93,6 +99,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.Init(transform, m_Camera.transform);
 
             playerLight = gameObject.GetComponent<PlayerLight>();
+			startingMaxLightValue = playerLight.lightLeft;
 
             //Set default state
             isFiring = false;
@@ -393,7 +400,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                GameObject gun = GameObject.FindGameObjectWithTag("gun");
+				gun = GameObject.FindGameObjectWithTag("gun");
+
                 Transform gunTransform = gun.GetComponent<Transform>();
                 Quaternion gunRotation = gunTransform.rotation;
                 Vector3 bulletStartPos = new Vector3(gunTransform.position.x, gunTransform.position.y, gunTransform.position.z);
@@ -401,6 +409,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 bulletObj.GetComponent<Transform>().position = bulletStartPos;
                 bulletObj.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * bulletVelocity, ForceMode.Impulse);
                 playerLight.incrLightByPrcnt(-0.1f);
+		
+				if(debugFlag)
+					Debug.Log("Shot gun");
+				ShrinkGunFunction();
             }
 
         }
@@ -410,6 +422,37 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			Debug.Log ("enter!!!");
         }
 
+
+		/**
+		 * Shrinks the gun to match the ratio of how much light is left in the player
+		 */
+		void ShrinkGunFunction()
+		{
+			//grab the scale of the gun
+			Vector3 gunScale = gun.transform.localScale;
+
+			//compute percentage of health left
+			lightRatio = playerLight.lightLeft / startingMaxLightValue;
+
+			//create new scale modified by ratio in the y direction
+			Vector3 newScale = new Vector3 (gunScale.x, gunScale.y * lightRatio, gunScale.z);
+
+			if(debugFlag)
+			{
+				Debug.Log ("Name of gun is: " + gun.name);
+				Debug.Log ("Local scale from gun: " + gun.transform.localScale);
+				Debug.Log ("Max health: " + startingMaxLightValue);
+				Debug.Log ("Current Health: " + playerLight.lightLeft);
+				Debug.Log ("Ratio: " + lightRatio);
+				Debug.Log ("New scale: " + newScale);
+				
+			}
+
+			//set the new scale
+			gun.transform.localScale = newScale;
+
+
+		}
 
     }
 }
