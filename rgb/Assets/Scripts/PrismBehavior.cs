@@ -31,7 +31,7 @@ public class PrismBehavior : MonoBehaviour {
         t.position = newPos;
 
         // spin cube
-//		transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, spinSpeed * Time.deltaTime);
 	}
 
 

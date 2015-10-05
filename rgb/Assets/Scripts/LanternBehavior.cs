@@ -37,6 +37,7 @@ public class LanternBehavior : MonoBehaviour {
 			lanternLight.enabled = true;
 			lanternLight.color = bulletLight.color;
 			lanternLight.intensity = bulletLight.intensity;
+            lanternLight.range = bulletLight.range;
             GetComponent<SwitchBehavior>().setOn(true);
 			Destroy(col.gameObject);
 		}
