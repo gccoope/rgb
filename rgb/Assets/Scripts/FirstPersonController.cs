@@ -103,6 +103,35 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             //Set default state
             isFiring = false;
+
+            //Set the gun object
+            gun = GameObject.FindGameObjectWithTag("gun");
+
+            //Set the gun color
+            switch (playerLight.playerLightType)
+            {
+                case TypeOfLight.White:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/White_Mat") as Material;
+                    break;
+                case TypeOfLight.Red:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Red_Mat") as Material;
+                    break;
+                case TypeOfLight.Orange:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Orange_Mat") as Material;
+                    break;
+                case TypeOfLight.Yellow:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Yellow_Mat") as Material;
+                    break;
+                case TypeOfLight.Green:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Green_Mat") as Material;
+                    break;
+                case TypeOfLight.Blue:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Blue_Mat") as Material;
+                    break;
+                case TypeOfLight.Violet:
+                    gun.GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Violet_Mat") as Material;
+                    break;
+            }
         }
 
 
@@ -400,7 +429,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-				gun = GameObject.FindGameObjectWithTag("gun");
+				
 
                 Transform gunTransform = gun.GetComponent<Transform>();
                 Quaternion gunRotation = gunTransform.rotation;

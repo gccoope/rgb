@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Bullet;
 
 
 /*
@@ -28,7 +29,7 @@ public class LanternBehavior : MonoBehaviour {
 		lanternLight.enabled = false;
 		insectParticles = GetComponent<ParticleSystem> ();
 		insectParticles.enableEmission = false;
-		timeToStartPartSystem = 10 + Random.value * 110; // start particle system some time between 10s and 120s
+		timeToStartPartSystem = 5 + Random.value * 10; // start particle system some time between 5s and 15s
 		counter = 0f;
 	}
 	
@@ -48,6 +49,36 @@ public class LanternBehavior : MonoBehaviour {
 		{
 			Light bulletLight = col.gameObject.GetComponent<Light>();
 			lanternLight.enabled = true;
+
+            //Set the self-illuminating material based on bullet color
+            BulletScript bScript = (BulletScript)col.GetComponent<BulletScript>();
+
+            switch (bScript.lightType)
+            {
+                case TypeOfLight.White:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/White_Mat") as Material;
+                    break;
+                case TypeOfLight.Red:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Red_Mat") as Material;
+                    break;
+                case TypeOfLight.Orange:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Orange_Mat") as Material;
+                    break;
+                case TypeOfLight.Yellow:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Yellow_Mat") as Material;
+                    break;
+                case TypeOfLight.Green:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Green_Mat") as Material;
+                    break;
+                case TypeOfLight.Blue:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Blue_Mat") as Material;
+                    break;
+                case TypeOfLight.Violet:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Violet_Mat") as Material;
+                    break;
+            }
+
+            
 			lanternLight.color = bulletLight.color;
 			lanternLight.intensity = bulletLight.intensity;
             lanternLight.range = bulletLight.range;

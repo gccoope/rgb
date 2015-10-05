@@ -105,4 +105,10 @@ public class PlayerLight : MonoBehaviour
                 break;
         }
     }
+
+    //Getter for player light type
+    public TypeOfLight getLightType()
+    {
+        return playerLightType;
+    }
 }

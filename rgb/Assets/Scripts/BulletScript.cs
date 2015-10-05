@@ -42,6 +42,31 @@ namespace Bullet
 		// Use this for initialization
 		void Start () {
 
+            switch (lightType)
+            {
+                case TypeOfLight.White:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/White_Mat") as Material;
+                    break;
+                case TypeOfLight.Red:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Red_Mat") as Material;
+                    break;
+                case TypeOfLight.Orange:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Orange_Mat") as Material;
+                    break;
+                case TypeOfLight.Yellow:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Yellow_Mat") as Material;
+                    break;
+                case TypeOfLight.Green:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Green_Mat") as Material;
+                    break;
+                case TypeOfLight.Blue:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Blue_Mat") as Material;
+                    break;
+                case TypeOfLight.Violet:
+                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Violet_Mat") as Material;
+                    break;
+            }
+
             /*
 
 			timeToDestroy = 2.0f;
