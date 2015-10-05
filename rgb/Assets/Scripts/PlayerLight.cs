@@ -41,7 +41,7 @@ public class PlayerLight : MonoBehaviour
     [SerializeField]
     public TypeOfLight playerLightType;
     [SerializeField]
-    float maxLight;
+    public float maxLight;
 
     public float lightLeft;
     private Light playerLight;

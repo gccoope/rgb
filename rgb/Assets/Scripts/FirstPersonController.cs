@@ -408,7 +408,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 BulletScript bScript = bulletObj.GetComponent<BulletScript>();
                 bulletObj.GetComponent<Transform>().position = bulletStartPos;
                 bulletObj.GetComponent<Rigidbody>().AddForce(m_Camera.transform.forward * bulletVelocity, ForceMode.Impulse);
-                //playerLight.incrLightByPrcnt(-0.1f);
+                playerLight.incrLightByPrcnt(-0.1f);
 		
 				if(debugFlag)
 					Debug.Log("Shot gun");
