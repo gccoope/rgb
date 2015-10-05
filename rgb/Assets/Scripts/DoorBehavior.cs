@@ -10,10 +10,10 @@ using System.Collections;
  */
 
 [RequireComponent(typeof(SwitchBehavior))]
+[RequireComponent(typeof(Triggerable))]
 
 public class DoorBehavior : MonoBehaviour {
-
-    [SerializeField] GameObject[] triggers;
+    
     [SerializeField] bool debugMode;
 
     private bool hasOpened, hasClosed;
@@ -27,16 +27,9 @@ public class DoorBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        // loop through array of triggers to see if they are on
-        int numberOn = 0; // variable to count how many triggers are on
-	    for(int t = 0; t < triggers.Length; t++)
-        {
-            SwitchBehavior sb = triggers[t].GetComponent<SwitchBehavior>();
-            if (sb.isSwitchOn()) numberOn++;
-        }
-
-        if (numberOn >= triggers.Length) openDoor();
+        if (GetComponent<Triggerable>().isTriggered()) openDoor();
         else closeDoor();
+
     }
 
     public void openDoor()
