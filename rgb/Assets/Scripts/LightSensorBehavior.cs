@@ -17,16 +17,23 @@ public class LightSensorBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        light = GetComponent<Light>();
+
         if (!alwaysVisible)
         {
             visible = false;
             GetComponent<MeshRenderer>().enabled = false;
+            light.enabled = false;
         }
-        else visible = true;
+        else {
+            visible = true;
+            light.enabled = true;
+        }
 
-        light = GetComponent<Light>();
-        light.enabled = false;
-	}
+        setLightVariables();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -38,9 +45,41 @@ public class LightSensorBehavior : MonoBehaviour {
             {
                 GetComponent<MeshRenderer>().enabled = true;
                 visible = true;
+                light.enabled = true;
             }
         }
 	}
+
+    void setLightVariables()
+    {
+        light.intensity = 2;
+        light.range = 5;
+
+        switch (lightType)
+        {
+            case TypeOfLight.White:
+                light.color = PlayerLight.color_white;
+                break;
+            case TypeOfLight.Red:
+                light.color = PlayerLight.color_red;
+                break;
+            case TypeOfLight.Orange:
+                light.color = PlayerLight.color_orange;
+                break;
+            case TypeOfLight.Yellow:
+                light.color = PlayerLight.color_yellow;
+                break;
+            case TypeOfLight.Green:
+                light.color = PlayerLight.color_green;
+                break;
+            case TypeOfLight.Blue:
+                light.color = PlayerLight.color_blue;
+                break;
+            case TypeOfLight.Violet:
+                light.color = PlayerLight.color_violet;
+                break;
+        }
+    }
 
     void OnTriggerEnter(Collider col)
     {
@@ -54,10 +93,34 @@ public class LightSensorBehavior : MonoBehaviour {
                 if (bs.lightType == lightType)
                 {
                     GetComponent<SwitchBehavior>().setOn(true);
-                    light.enabled = true;
-                    light.color = bulletLight.color;
-                    light.range = bulletLight.range;
-                    light.intensity = bulletLight.intensity;
+                    MeshRenderer mr = GetComponent<MeshRenderer>();
+
+                    // change material type to always lit
+                    switch (lightType)
+                    {
+                        case TypeOfLight.White:
+                            // lol "Mr. Material"
+                            mr.material = Resources.Load("Solid_Always_Lit/White_Mat", typeof(Material)) as Material;
+                            break;
+                        case TypeOfLight.Red:
+                            mr.material = Resources.Load("Solid_Always_Lit/Red_Mat", typeof(Material)) as Material;
+                            break;
+                        case TypeOfLight.Orange:
+                            mr.material = Resources.Load("Solid_Always_Lit/Orange_Mat", typeof(Material)) as Material;
+                            break;
+                        case TypeOfLight.Yellow:
+                            mr.material = Resources.Load("Solid_Always_Lit/Yellow_Mat", typeof(Material)) as Material;
+                            break;
+                        case TypeOfLight.Green:
+                            mr.material = Resources.Load("Solid_Always_Lit/Green_Mat", typeof(Material)) as Material;
+                            break;
+                        case TypeOfLight.Blue:
+                            mr.material = Resources.Load("Solid_Always_Lit/Blue_Mat", typeof(Material)) as Material;
+                            break;
+                        case TypeOfLight.Violet:
+                            mr.material = Resources.Load("Solid_Always_Lit/Violet_Mat", typeof(Material)) as Material;
+                            break;
+                    }
 
                     Destroy(col.gameObject);
                      
