@@ -13,7 +13,7 @@ public class SpawnPlayer : MonoBehaviour {
 
     [SerializeField] GameObject player; // the player prefab that will be spawned.
 
-    bool respawn = false; // when the player dies, respawn will toggle to "true," and reposition the player to the spawn point.
+    public bool respawn = false; // when the player dies, respawn will toggle to "true," and reposition the player to the spawn point.
     Transform spawnPoint; // the position at which the player will spawn
 
 	// Use this for initialization
@@ -21,18 +21,22 @@ public class SpawnPlayer : MonoBehaviour {
         //spawnPoint = GetComponent<Transform>(); // set spawnPoint to this object's Transform
 
         GameObject p = (GameObject)Instantiate(player, transform.position, transform.rotation);
+        respawn = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-	    if(respawn)
-        { // postion the player at the spawn point (Does not reset values like health, etc. !!! Do that somewhere else, maybe?)
-            Transform pTransform = player.GetComponent<Transform>();
-			Vector3 newPlayerPosit = new Vector3(pTransform.position.x, pTransform.position.y, pTransform.position.z);
-//			newPlayerPosit.y += 30;
-            pTransform.position = newPlayerPosit;
-        }
+	    if(respawn) spawnPlayer();
 
 	}
+
+    public void spawnPlayer()
+    {
+        GameObject p = (GameObject)Instantiate(player, transform.position, transform.rotation);
+        Transform pTransform = player.GetComponent<Transform>();
+        Vector3 newPlayerPosit = new Vector3(pTransform.position.x, pTransform.position.y, pTransform.position.z);
+        pTransform.position = newPlayerPosit;
+        respawn = false;
+    }
 }
