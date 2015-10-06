@@ -72,6 +72,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         //gun gameobject
         public GameObject gun;
 
+        //Save the gun's initial scale
+        private Vector3 gunInitialScale;
+
         //velocity of bullet
         public float bulletVelocity = 100F;
 
@@ -106,6 +109,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             //Set the gun object
             gun = GameObject.FindGameObjectWithTag("gun");
+            gunInitialScale = gun.transform.localScale;
 
             //Set the gun color
             switch (playerLight.playerLightType)
@@ -445,26 +449,24 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
         }
-
+        /*
         void onCollisionEnter(Collider col)
         {
 			Debug.Log ("enter!!!");
         }
-
+        */
 
 		/**
 		 * Shrinks the gun to match the ratio of how much light is left in the player
 		 */
-		void ShrinkGunFunction()
+		public void ShrinkGunFunction()
 		{
-			//grab the scale of the gun
-			Vector3 gunScale = gun.transform.localScale;
 
 			//compute percentage of health left
 			lightRatio = playerLight.lightLeft / startingMaxLightValue;
 
 			//create new scale modified by ratio in the y direction
-			Vector3 newScale = new Vector3 (gunScale.x, gunScale.y * lightRatio, gunScale.z);
+			Vector3 newScale = new Vector3 (gunInitialScale.x, gunInitialScale.y * lightRatio, gunInitialScale.z);
 
 			if(debugFlag)
 			{

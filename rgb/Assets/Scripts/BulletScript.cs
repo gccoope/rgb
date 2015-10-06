@@ -45,10 +45,12 @@ namespace Bullet
             switch (lightType)
             {
                 case TypeOfLight.White:
-                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/White_Mat") as Material;
+                    GetComponent<Renderer>().material.mainTexture = Resources.Load("White_Orb_Tex") as Texture;    
+                //GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/White_Mat") as Material;
                     break;
                 case TypeOfLight.Red:
-                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Red_Mat") as Material;
+                    GetComponent<Renderer>().material.mainTexture = Resources.Load("Red_Orb_Tex") as Texture;
+                    //GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Red_Mat") as Material;
                     break;
                 case TypeOfLight.Orange:
                     GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Orange_Mat") as Material;
@@ -57,10 +59,12 @@ namespace Bullet
                     GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Yellow_Mat") as Material;
                     break;
                 case TypeOfLight.Green:
-                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Green_Mat") as Material;
+                    GetComponent<Renderer>().material.mainTexture = Resources.Load("Green_Orb_Tex") as Texture;
+                    //GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Green_Mat") as Material;
                     break;
                 case TypeOfLight.Blue:
-                    GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Blue_Mat") as Material;
+                    GetComponent<Renderer>().material.mainTexture = Resources.Load("Blue_Orb_Tex") as Texture;
+                    //GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Blue_Mat") as Material;
                     break;
                 case TypeOfLight.Violet:
                     GetComponent<Renderer>().material = Resources.Load("Solid_Always_Lit/Violet_Mat") as Material;

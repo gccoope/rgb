@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class LightRefillBehavior : MonoBehaviour {
 	
@@ -49,6 +50,7 @@ public class LightRefillBehavior : MonoBehaviour {
 		if (col.gameObject.tag == "player") {
 			PlayerLight pLight = player.GetComponent<PlayerLight>();
 			pLight.lightLeft = pLight.maxLight;
+            col.GetComponent<FirstPersonController>().ShrinkGunFunction();
 			if(debugMode) Debug.Log("player light replenished!");
 			Destroy(gameObject);
 		}
