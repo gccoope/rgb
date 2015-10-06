@@ -433,8 +433,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-				
 
+                gun = GameObject.FindGameObjectWithTag("gun");
                 Transform gunTransform = gun.GetComponent<Transform>();
                 Quaternion gunRotation = gunTransform.rotation;
                 Vector3 bulletStartPos = new Vector3(gunTransform.position.x, gunTransform.position.y, gunTransform.position.z);
