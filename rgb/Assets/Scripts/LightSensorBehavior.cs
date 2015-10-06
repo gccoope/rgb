@@ -37,7 +37,11 @@ public class LightSensorBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (player == null) player = GameObject.FindGameObjectWithTag("player");
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("player");
+            return;
+        }
 
         if (!alwaysVisible)
         {
